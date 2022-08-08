@@ -231,8 +231,8 @@ def main():
                 outVideo.write(value['last_frame'])
                 value['last_frame'] = ''
 
-            if frame_num >= 20:
-                break
+            # if frame_num >= 20:
+            #     break
 
         break
 
