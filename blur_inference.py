@@ -116,18 +116,18 @@ def main():
         th_Gaussian_Laplacian = args.th_Gaussian_Laplacian
 
     nested_blur_dict = {
-        "Brenner": {'th': th_Brenner},
-        "Laplacian": {'th': th_Laplacian},
-        "Thenengrad": {'th': th_Thenengrad},
-        "SMD": {'th': th_SMD},
-        "SMD2": {'th': th_SMD2},
-        "Variance": {'th': th_Variance},
-        "Energy": {'th': th_Energy},
-        "Vollath": {'th': th_Vollath},
-        "Entropy": {'th': th_Entropy},
-        "JPEG": {'th': th_JPEG},
-        "JPEG2": {'th': th_JPEG2},
-        "Gaussian_Laplacian": {'th': th_Gaussian_Laplacian}}
+        "Brenner": {'last_frame': '', 'th': th_Brenner},
+        "Laplacian": {'last_frame': '', 'th': th_Laplacian},
+        "Thenengrad": {'last_frame': '', 'th': th_Thenengrad},
+        "SMD": {'last_frame': '', 'th': th_SMD},
+        "SMD2": {'last_frame': '', 'th': th_SMD2},
+        "Variance": {'last_frame': '', 'th': th_Variance},
+        "Energy": {'last_frame': '', 'th': th_Energy},
+        "Vollath": {'last_frame': '', 'th': th_Vollath},
+        "Entropy": {'last_frame': '', 'th': th_Entropy},
+        "JPEG": {'last_frame': '', 'th': th_JPEG},
+        "JPEG2": {'last_frame': '', 'th': th_JPEG2},
+        "Gaussian_Laplacian": {'last_frame': '', 'th': th_Gaussian_Laplacian}}
 
     for key, value in nested_blur_dict.items():
         output_video = output_video_filename.replace('_output.mp4', f'_{key}_output.mp4')
@@ -198,7 +198,10 @@ def main():
 
                 for key, value in nested_blur_dict.items():
 
-                    frame_copy = frame.copy()
+                    if value['last_frame'] is '':
+                        frame_copy = frame.copy()
+                    else:
+                        frame_copy = value['last_frame']
 
                     outVideo = value['video']
 
@@ -220,13 +223,15 @@ def main():
                                 1, (255, 255, 255), 2, cv2.LINE_AA)
                     cv2.putText(frame_copy, f"BLUR METHOD: {key}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
                                 1, (0, 255, 0), 2, cv2.LINE_AA)
+
                     value['last_frame'] = frame_copy.copy()
 
-                for key, value in nested_blur_dict.items():
-                    outVideo = value['video']
-                    outVideo.write(value['last_frame'])
+            for key, value in nested_blur_dict.items():
+                outVideo = value['video']
+                outVideo.write(value['last_frame'])
+                value['last_frame'] = ''
 
-            if frame_num >= 300:
+            if frame_num >= 20:
                 break
 
         break
