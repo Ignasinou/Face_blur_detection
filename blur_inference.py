@@ -57,7 +57,7 @@ def main():
     parser.add_argument('--th_JPEG2', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 4.999561272269467')
     parser.add_argument('--th_Gaussian_Laplacian', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 12.60')
 
-    parser.add_argument('--provisional_th_base', type=int, default=0, choices=[0, 1])
+    parser.add_argument('--provisional_th_base', type=int, default=1, choices=[0, 1])
 
     args = parser.parse_args()
 
