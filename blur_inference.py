@@ -146,13 +146,15 @@ def main():
             if not len(faces):
                 for key, value in nested_blur_dict.items():
                     outVideo = value['video']
-                    outVideo.write(frame.copy())
+                    frame_no = cv2.putText(frame.copy(), f"BLUR METHOD: {key}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX,
+                                1, (0, 255, 0), 2, cv2.LINE_AA)
+                    outVideo.write(frame_no)
                 continue
 
 
             for face, bbox in zip(faces, boxes):
 
-                face = cv2.resize(face, (48, 48))
+                face = cv2.resize(face, (160, 160))
 
                 #--------- _Brenner ---------
                 score_Brenner = blur_score._Brenner(face)
