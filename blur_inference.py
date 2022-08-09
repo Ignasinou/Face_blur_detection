@@ -44,20 +44,18 @@ def main():
     parser.add_argument('--videoFile')
     parser.add_argument('--centerface_threshold', type=float, default=0.7, help="centerface th")
 
-    parser.add_argument('--th_Brenner', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 5383350')
-    parser.add_argument('--th_Laplacian', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 66658734')
-    parser.add_argument('--th_Thenengrad', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 4.71')
-    parser.add_argument('--th_SMD', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 6.44')
-    parser.add_argument('--th_SMD2', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 1982.758')
-    parser.add_argument('--th_Variance', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 15.73')
-    parser.add_argument('--th_Energy', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 2650.78')
-    parser.add_argument('--th_Vollath', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 6592.09')
-    parser.add_argument('--th_Entropy', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 6521070215.58')
-    parser.add_argument('--th_JPEG', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 11.924')
-    parser.add_argument('--th_JPEG2', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 4.999561272269467')
-    parser.add_argument('--th_Gaussian_Laplacian', type=float, default=0.5, help='If provisional is 0 please use the following value as reference: 12.60')
-
-    parser.add_argument('--provisional_th_base', type=int, default=1, choices=[0, 1])
+    parser.add_argument('--th_Brenner', type=float, default=250000)
+    parser.add_argument('--th_Laplacian', type=float, default=200)
+    parser.add_argument('--th_Thenengrad', type=float, default=500)
+    parser.add_argument('--th_SMD', type=float, default=100)
+    parser.add_argument('--th_SMD2', type=float, default=1)
+    parser.add_argument('--th_Variance', type=float, default=800)
+    parser.add_argument('--th_Energy', type=float, default=50000000)
+    parser.add_argument('--th_Vollath', type=float, default=14000000)
+    parser.add_argument('--th_Entropy', type=float, default=4.71)
+    parser.add_argument('--th_JPEG', type=float, default=11.924)
+    parser.add_argument('--th_JPEG2', type=float, default=4.996)
+    parser.add_argument('--th_Gaussian_Laplacian', type=float, default=100)
 
     args = parser.parse_args()
 
@@ -74,46 +72,46 @@ def main():
     fps = video.get(cv2.CAP_PROP_FPS)
 
     # th is the not normalized th base (blur)
-    th_Brenner_base = 5383350
-    th_Laplacian_base = 66658734
-    th_Thenengrad_base = 4.71
-    th_SMD_base = 6.44
-    th_SMD2_base = 1982.758
-    th_Variance_base = 15.73
-    th_Energy_base = 2650.78
-    th_Vollath_base = 6592.09
-    th_Entropy_base = 6521070215.58
-    th_JPEG_base = 11.924
-    th_JPEG2_base = 4.999561272269467
-    th_Gaussian_Laplacian_base = 12.60
+    # th_Brenner_base = 5383350
+    # th_Laplacian_base = 6.44
+    # th_Thenengrad_base = 2650.78
+    # th_SMD_base = 1982.75
+    # th_SMD2_base = 15.73
+    # th_Variance_base = 6592.09
+    # th_Energy_base = 66658734
+    # th_Vollath_base = 6521070215.58
+    # th_Entropy_base = 4.71
+    # th_JPEG_base = 11.924
+    # th_JPEG2_base = 4.999561272269467
+    # th_Gaussian_Laplacian_base = 12.60
 
-    if args.provisional_th_base:
-        th_Brenner = args.th_Brenner * (th_Brenner_base * 2)
-        th_Laplacian = args.th_Laplacian * (th_Laplacian_base * 2)
-        th_Thenengrad = args.th_Thenengrad * (th_Thenengrad_base * 2)
-        th_SMD = args.th_SMD * (th_SMD_base * 2)
-        th_SMD2 = args.th_SMD2 * (th_SMD2_base * 2)
-        th_Variance = args.th_Variance * (th_Variance_base * 2)
-        th_Energy = args.th_Energy * (th_Energy_base * 2)
-        th_Vollath = args.th_Vollath * (th_Vollath_base * 2)
-        th_Entropy = args.th_Entropy * (th_Entropy_base * 2)
-        th_JPEG = args.th_JPEG * (th_JPEG_base * 2)
-        th_JPEG2 = args.th_JPEG2 * (th_JPEG2_base * 2)
-        th_Gaussian_Laplacian = args.th_Gaussian_Laplacian * (th_Gaussian_Laplacian_base * 2)
-
-    else:
-        th_Brenner = args.th_Brenner
-        th_Laplacian = args.th_Laplacian
-        th_Thenengrad = args.th_Thenengrad
-        th_SMD = args.th_SMD
-        th_SMD2 = args.th_SMD2
-        th_Variance = args.th_Variance
-        th_Energy = args.th_Energy
-        th_Vollath = args.th_Vollath
-        th_Entropy = args.th_Entropy
-        th_JPEG = args.th_JPEG
-        th_JPEG2 = args.th_JPEG2
-        th_Gaussian_Laplacian = args.th_Gaussian_Laplacian
+    # if args.provisional_th_base:
+    #     th_Brenner = args.th_Brenner * (th_Brenner_base * 2)
+    #     th_Laplacian = args.th_Laplacian * (th_Laplacian_base * 2)
+    #     th_Thenengrad = args.th_Thenengrad * (th_Thenengrad_base * 2)
+    #     th_SMD = args.th_SMD * (th_SMD_base * 2)
+    #     th_SMD2 = args.th_SMD2 * (th_SMD2_base * 2)
+    #     th_Variance = args.th_Variance * (th_Variance_base * 2)
+    #     th_Energy = args.th_Energy * (th_Energy_base * 2)
+    #     th_Vollath = args.th_Vollath * (th_Vollath_base * 2)
+    #     th_Entropy = args.th_Entropy * (th_Entropy_base * 2)
+    #     th_JPEG = args.th_JPEG * (th_JPEG_base * 2)
+    #     th_JPEG2 = args.th_JPEG2 * (th_JPEG2_base * 2)
+    #     th_Gaussian_Laplacian = args.th_Gaussian_Laplacian * (th_Gaussian_Laplacian_base * 2)
+    #
+    # else:
+    th_Brenner = args.th_Brenner
+    th_Laplacian = args.th_Laplacian
+    th_Thenengrad = args.th_Thenengrad
+    th_SMD = args.th_SMD
+    th_SMD2 = args.th_SMD2
+    th_Variance = args.th_Variance
+    th_Energy = args.th_Energy
+    th_Vollath = args.th_Vollath
+    th_Entropy = args.th_Entropy
+    th_JPEG = args.th_JPEG
+    th_JPEG2 = args.th_JPEG2
+    th_Gaussian_Laplacian = args.th_Gaussian_Laplacian
 
     nested_blur_dict = {
         "Brenner": {'last_frame': '', 'th': th_Brenner},
@@ -153,6 +151,8 @@ def main():
 
 
             for face, bbox in zip(faces, boxes):
+
+                face = cv2.resize(face, (48, 48))
 
                 #--------- _Brenner ---------
                 score_Brenner = blur_score._Brenner(face)
@@ -205,7 +205,7 @@ def main():
 
                 for key, value in nested_blur_dict.items():
 
-                    if value['last_frame'] is '':
+                    if value['last_frame'] == '':
                         frame_copy = frame.copy()
                     else:
                         frame_copy = value['last_frame']
@@ -213,10 +213,16 @@ def main():
                     last_blur_score = float(value['last_score'])
                     blur_th = float(value['th'])
 
-                    if last_blur_score >= blur_th:
-                        color = (0, 255, 0)
+                    if ('JPEG' in key) or ('Vollath' in key):
+                        if last_blur_score <= blur_th:
+                            color = (0, 255, 0)
+                        else:
+                            color = (0, 0, 255)
                     else:
-                        color = (0, 0, 255)
+                        if last_blur_score >= blur_th:
+                            color = (0, 255, 0)
+                        else:
+                            color = (0, 0, 255)
 
                     last_blur_score = float(f"{last_blur_score:0.5f}")
                     frame_copy = cv2.rectangle(frame_copy, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, 10)
