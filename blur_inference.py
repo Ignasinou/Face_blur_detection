@@ -8,8 +8,13 @@ import subprocess
 
 
 def get_faces_from_centerface(frame, centerface_threshold, centerface):
+    centerface_w = 640
     h, w = frame.shape[:2]
-    width = w
+    if centerface_w == 0:
+        width = w
+    else:
+        width = centerface_w
+
     r = width / float(w)
     height = int(h * r)
 
