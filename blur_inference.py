@@ -145,6 +145,13 @@ def main():
                                                      centerface_threshold=args.centerface_threshold,
                                                      centerface=centerface)
 
+            if not len(faces):
+                for key, value in nested_blur_dict.items():
+                    outVideo = value['video']
+                    outVideo.write(frame.copy())
+                continue
+
+
             for face, bbox in zip(faces, boxes):
 
                 #--------- _Brenner ---------
@@ -202,12 +209,6 @@ def main():
                         frame_copy = frame.copy()
                     else:
                         frame_copy = value['last_frame']
-
-                    outVideo = value['video']
-
-                    if not len(faces):
-                        outVideo.write(frame_copy)
-                        continue
 
                     last_blur_score = float(value['last_score'])
                     blur_th = float(value['th'])
