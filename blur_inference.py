@@ -52,15 +52,15 @@ def main():
     parser.add_argument('--th_Brenner', type=float, default=250000)
     parser.add_argument('--th_Laplacian', type=float, default=10)
     parser.add_argument('--th_Thenengrad', type=float, default=500)
-    parser.add_argument('--th_SMD', type=float, default=300)
+    parser.add_argument('--th_SMD', type=float, default=350)
     parser.add_argument('--th_SMD2', type=float, default=1)
-    parser.add_argument('--th_Variance', type=float, default=800)
-    parser.add_argument('--th_Energy', type=float, default=10000000)
+    parser.add_argument('--th_Variance', type=float, default=500)
+    parser.add_argument('--th_Energy', type=float, default=1000000)
     parser.add_argument('--th_Vollath', type=float, default=160000000)
-    parser.add_argument('--th_Entropy', type=float, default=4.71)
+    parser.add_argument('--th_Entropy', type=float, default=4.5)
     parser.add_argument('--th_JPEG', type=float, default=11.5)
-    parser.add_argument('--th_JPEG2', type=float, default=4.9989)
-    parser.add_argument('--th_Gaussian_Laplacian', type=float, default=50)
+    parser.add_argument('--th_JPEG2', type=float, default=4.99998)
+    parser.add_argument('--th_Gaussian_Laplacian', type=float, default=10)
 
     args = parser.parse_args()
 
@@ -159,7 +159,8 @@ def main():
 
             for face, bbox in zip(faces, boxes):
 
-                face = cv2.resize(face, (160, 160))
+                face = cv2.resize(face, (224, 224))
+                face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
                 #--------- _Brenner ---------
                 score_Brenner = blur_score._Brenner(face)
